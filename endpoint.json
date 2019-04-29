@@ -1,0 +1,113 @@
+{
+  "label": "Authorize.Net",
+  "name": "authorize-net",
+  "apiVersion": "v1",
+  "internal": false,
+  "configurationType": "GLOBAL",
+  "deployment": {
+    "profiles": [
+      {
+        "name": "default",
+        "label": "Default",
+        "memory": 256,
+        "description": "Default configuration"
+      }
+    ],
+    "allowMultipleInstances": false
+  },
+  "icon48": "https://storage.googleapis.com/static.slingrs.io/platform/endpoints/authorize-net.png",
+  "configurationHelpUrl": "/endpoints_authorize-net.html#configuration",
+  "status": "ACTIVE",
+  "stores": [],
+  "events": [
+    {
+      "label": "Webhook",
+      "name": "webhook",
+      "description": "Happens when a Authorize.Net hits the endpoint URL."
+    }
+  ],
+  "functions": [
+    {
+      "label": "POST",
+      "name": "_post"
+    }
+  ],
+  "scripts": [
+    "authorize-net-helpers.js",
+    "functions.js"
+  ],
+  "configuration": [
+    {
+      "name": "webhook",
+      "label": "Webhook URL",
+      "type": "label",
+      "value": "@config.WEBHOOK_URL"
+    },
+    {
+      "label": "API Endpoint",
+      "name": "apiEndpoint",
+      "type": "buttonsGroup",
+      "required": true,
+      "defaultValue": "sandbox",
+      "typeOptions": {
+        "allowCustom": true,
+        "possibleValues": [
+          {
+            "label": "Sandbox",
+            "name": "sandbox"
+          },
+          {
+            "label": "Production",
+            "name": "production"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Sandbox",
+      "name": "sandbox",
+      "type": "fieldsGroup",
+      "typeOptions": {
+        "fields": [
+          {
+            "name": "sandboxApiLoginId",
+            "label": "Sandbox API Login Id",
+            "type": "text",
+            "description": "The API Login ID is provided in the Merchant Interface.",
+            "required": "config.apiEndpoint == 'sandbox'"
+          },
+          {
+            "name": "sandboxTransactionKey",
+            "label": "Sandbox Transaction Key",
+            "type": "text",
+            "description": "The merchant Transaction Key is provided in the Merchant Interface.",
+            "required": "config.apiEndpoint == 'sandbox'"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Production",
+      "name": "production",
+      "type": "fieldsGroup",
+      "typeOptions": {
+        "fields": [
+          {
+            "name": "apiLoginId",
+            "label": "API Login Id",
+            "type": "text",
+            "description": "The API Login ID is provided in the Merchant Interface.",
+            "required": "config.apiEndpoint == 'production'"
+          },
+          {
+            "name": "transactionKey",
+            "label": "Transaction Key",
+            "type": "text",
+            "description": "The merchant Transaction Key is provided in the Merchant Interface.",
+            "required": "config.apiEndpoint == 'production'"
+          }
+        ]
+      }
+    }
+  ]
+}
